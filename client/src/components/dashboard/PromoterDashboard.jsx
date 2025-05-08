@@ -1,16 +1,16 @@
 // PromoterDashboard.jsx
+
 import React, { useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import { useTeam } from '../hooks/useTeam';
-import Header from '../components/layout/Header';
+import { useAuth } from '../../hooks/useAuth'; 
+import { useTeam } from '../../hooks/useTeam';
+import Header from '../../components/components/layout/Header';
 import Footer from '../components/layout/Footer';
 import Card from '../components/common/Card';
 import Button from '../components/common/Button';
 import TeamGrowthVisualization from '../components/dashboard/TeamGrowthVisualization';
 import ActivityFeed from '../components/dashboard/ActivityFeed';
 import FinancialSummary from '../components/dashboard/FinancialSummary';
-import UserProfile from '../components/dashboard/UserProfile';
-
+import UserProfile from '../components/dashboard/UserProfile'; 
 const PromoterDashboard = () => {
   const { user } = useAuth();
   const { teamData, loading, error, refreshTeamData } = useTeam();
