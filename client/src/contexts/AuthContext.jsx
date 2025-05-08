@@ -1,46 +1,55 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from '../utils/axiosInstance';
 
-const AuthContext = createContext();
+import React, { createContext, useState, useEffect } from "react";
+import axios from "../utils/axiosInstance";
 
-export const useAuth = () => useContext(AuthContext);
+export const AuthContext = createContext();
 
-function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(() => localStorage.getItem('token'));
+  const [loading, setLoading] = useState(true);
+
+  const fetchUser = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const response = await axios.get("/auth/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(response.data.user);
+    } catch (err) {
+      console.error("Auth fetch failed", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      // Optionally fetch user data here
-    }
-  }, [token]);
+    fetchUser();
+  }, []);
 
   const login = async (credentials) => {
-    try {
-      const response = await axios.post('/auth/login', credentials);
-      const { token, user } = response.data;
-      setToken(token);
-      setUser(user);
-      localStorage.setItem('token', token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
+    const response = await axios.post("/auth/login", credentials);
+    localStorage.setItem("token", response.data.token);
+    setUser(response.data.user);
   };
 
   const logout = () => {
+    localStorage.removeItem("token");
     setUser(null);
-    setToken(null);
-    localStorage.removeItem('token');
-    delete axios.defaults.headers.common['Authorization'];
+  };
+
+  const value = {
+    user,
+    login,
+    logout,
+    loading,
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
-      {children}
+    <AuthContext.Provider value={value}>
+      {!loading && children}
     </AuthContext.Provider>
   );
-}
-
-export default AuthProvider;
+};
