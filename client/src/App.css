@@ -1,0 +1,93 @@
+import '@tailwindcss'
+
+ /* App.css - TailwindCSS v4 version */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Theme Colors */
+:root {
+  --color-navy: #0a1f44;
+  --color-gold: #f0c330;
+  --color-darkNavy: #071a34;
+  --color-royalBlue: #4169e1;
+}
+
+body {
+  @apply bg-navy text-white;
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4;
+}
+
+/* Button Variants */
+.btn-primary {
+  @apply bg-gold text-navy font-semibold py-2 px-4 rounded shadow hover:bg-yellow-400 transition;
+}
+
+.btn-secondary {
+  @apply bg-white text-navy font-medium py-2 px-4 rounded shadow hover:bg-gray-100 transition;
+}
+
+/* Card styling */
+.card {
+  @apply bg-darkNavy text-white p-6 rounded-lg shadow;
+}
+
+.card-dark {
+  @apply bg-navy text-white p-6 rounded-lg shadow;
+}
+
+/* Tab Buttons */
+.tab-button {
+  @apply px-4 py-2 text-white font-medium border-b-2;
+}
+
+.tab-button-active {
+  @apply border-gold;
+}
+
+/* Input fields */
+.input-field {
+  @apply w-full p-3 border border-gray-600 rounded bg-navy text-white placeholder-gray-400;
+}
+
+/* Footer */
+footer {
+  @apply bg-darkNavy text-sm text-gray-400 py-6 text-center;
+}
+
+/* Utility classes */
+.text-gold {
+  color: var(--color-gold);
+}
+
+.bg-navy {
+  background-color: var(--color-navy);
+}
+
+.bg-darkNavy {
+  background-color: var(--color-darkNavy);
+}
+
+.border-gold {
+  border-color: var(--color-gold);
+}
+
+.text-royalBlue {
+  color: var(--color-royalBlue);
+}
+
+.border-royalBlue {
+  border-color: var(--color-royalBlue);
+}
+
+.bg-gold {
+  background-color: var(--color-gold);
+}
